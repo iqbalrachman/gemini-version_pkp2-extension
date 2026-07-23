@@ -1,0 +1,39 @@
+---
+const { galleryItems = [] } = Astro.props;
+
+// Filter khusus untuk foto rumah/interior (mengabaikan foto hero/progress jika ada)
+const unitPhotos = galleryItems.filter(item => item.kategori === 'unit');
+---
+
+<section class="py-24 bg-white" id="galeri">
+  <div class="container mx-auto px-6 max-w-6xl">
+    
+    <div class="text-center mb-16">
+      <h2 class="font-playfair text-4xl md:text-5xl font-bold text-navy mb-4">Galeri Hunian</h2>
+      <p class="font-poppins text-gray-500 max-w-2xl mx-auto text-lg">Jelajahi setiap sudut desain interior dan eksterior premium kami.</p>
+    </div>
+
+    <!-- Grid Layout Premium ala Pinterest -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[250px]">
+      {unitPhotos.map((photo, index) => (
+        <div class={`group relative overflow-hidden rounded-[1.5rem] bg-gray-100 ${index === 0 ? 'md:col-span-2 md:row-span-2' : ''}`}>
+          
+          <!-- Dummy Image sementara nunggu script download dari Drive jalan -->
+          <img 
+            src={`https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop&sig=${index}`} 
+            alt={photo.caption} 
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
+          />
+          
+          <!-- Overlay Caption -->
+          <div class="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+            <p class="font-poppins text-white font-medium text-lg">{photo.caption || "Desain Interior Premium"}</p>
+          </div>
+          
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
