@@ -1,0 +1,35 @@
+---
+const { title, subtitle } = Astro.props;
+// Note: Gambar background ini sementara pakai link luar. 
+// Di fase akhir, kita akan bikin script khusus buat download gambar dari Google Drive lo.
+const heroBg = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2075&auto=format&fit=crop";
+---
+<section class="relative w-full h-screen flex items-center justify-center overflow-hidden">
+  <!-- Background Image & Overlay Putih -->
+  <div class="absolute inset-0 z-0">
+    <img src={heroBg} alt="Hero Background" class="w-full h-full object-cover" />
+    <div class="absolute inset-0 bg-white/50 backdrop-blur-[2px]"></div>
+  </div>
+
+  <!-- Floating Card (Premium Clean, Large Rounded, Soft Shadow) -->
+  <div class="relative z-10 bg-white/95 p-8 md:p-14 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] max-w-3xl mx-4 text-center border border-white animate-fade-in-up">
+    
+    <h1 class="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold text-navy mb-6 leading-tight">
+      {title}
+    </h1>
+    
+    <p class="font-poppins text-lg md:text-xl text-gray-700 mb-10 font-medium tracking-wide">
+      {subtitle}
+    </p>
+    
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#katalog" class="font-poppins bg-navy text-white px-8 py-4 rounded-full font-semibold hover:bg-navy/90 transition-all shadow-lg text-lg">
+        Lihat Pilihan Unit
+      </a>
+      <a href="https://wa.me/6281234567890" target="_blank" class="font-poppins bg-gold text-white px-8 py-4 rounded-full font-semibold hover:bg-gold/90 transition-all shadow-lg text-lg flex items-center justify-center gap-2">
+        WhatsApp Sekarang
+      </a>
+    </div>
+
+  </div>
+</section>
