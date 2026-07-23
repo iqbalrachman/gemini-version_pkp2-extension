@@ -1,23 +1,24 @@
 ---
 import Hero from '../components/Hero.astro';
+import Katalog from '../components/Katalog.astro'; // Tambahin baris ini
 
-// URL API Google Apps Script lo
+// Pastikan ini adalah URL Web App lo yang paling baru
 const API_URL = "https://script.google.com/macros/s/AKfycbytVSPIHnoX7I1LoZQ04q1q3EU60P8r2BYlGHKg-55Fu0G0bx7_GTiycmiAiJTNMRIX/exec";
 
-let heroTitle = "Puri Kencana Permai II";
-let heroSubtitle = "Harga Mulai Rp 900 Jutaan | DP 0%";
-let metaTitle = "Puri Kencana Permai II - Premium";
+// Bikin tempat penyimpanan data sementara
+let data = { content: {}, units: [], gallery: [], articles: [] };
 
 try {
   const response = await fetch(API_URL);
-  const data = await response.json();
-  
-  heroTitle = data.content.hero_title || heroTitle;
-  heroSubtitle = data.content.hero_subtitle || heroSubtitle;
-  metaTitle = data.content.meta_title || metaTitle;
+  data = await response.json();
 } catch (error) {
   console.error("Error API:", error);
 }
+
+// Persiapan Variabel Hero
+const heroTitle = data.content.hero_title || "Puri Kencana Permai II";
+const heroSubtitle = data.content.hero_subtitle || "Harga Mulai Rp 900 Jutaan | DP 0%";
+const metaTitle = data.content.meta_title || "Puri Kencana Permai II - Premium";
 ---
 
 <html lang="id" class="scroll-smooth">
@@ -25,22 +26,17 @@ try {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{metaTitle}</title>
-    
-    <!-- Import Font Premium -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
   
   <body class="bg-white font-poppins text-navy antialiased">
     
-    <!-- Hero Section -->
     <Hero title={heroTitle} subtitle={heroSubtitle} />
 
-    <!-- Dummy section buat scroll -->
-    <div id="katalog" class="h-screen bg-gray-50 flex items-center justify-center">
-      <p class="text-2xl font-playfair text-navy">Katalog Unit & Filter Chip akan muncul di sini.</p>
-    </div>
+    <!-- Panggil Komponen Katalog & Kirim Data Units-nya -->
+    <Katalog units={data.units} />
 
   </body>
 </html>
