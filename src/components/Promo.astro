@@ -1,0 +1,49 @@
+---
+// Daftar promo ditarik langsung dari brosur PKP2 lo
+const promos = [
+  "FREE Biaya BPHTB",
+  "FREE Biaya AJB",
+  "FREE Biaya Balik Nama",
+  "FREE Biaya Notaris",
+  "FREE Biaya KPR (Saldo blokir ditanggung konsumen)",
+  "Bonus 1 Unit AC",
+  "Bonus Water Heater",
+  "Bonus Kanopi Depan"
+];
+---
+
+<section class="py-20 bg-navy relative overflow-hidden">
+  <!-- Elemen Dekorasi Background -->
+  <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-white/5 blur-3xl"></div>
+  <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-gold/10 blur-3xl"></div>
+
+  <div class="container mx-auto px-6 max-w-5xl relative z-10">
+    <div class="text-center mb-12 animate-fade-in-up">
+      <span class="bg-gold/20 text-gold px-4 py-1.5 rounded-full text-sm font-bold tracking-wider uppercase mb-4 inline-block">Penawaran Terbatas</span>
+      <h2 class="font-playfair text-4xl md:text-5xl font-bold text-white mb-4">Promo & Bonus Menarik</h2>
+      <p class="font-poppins text-gray-300 text-lg">Booking sekarang dan nikmati berbagai keuntungan eksklusif untuk hunian impian Anda.</p>
+    </div>
+
+    <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-[2rem] p-8 md:p-12 shadow-2xl">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12">
+        {promos.map((promo) => (
+          <div class="flex items-start gap-4">
+            <!-- Icon Checklist Gold -->
+            <div class="mt-1 flex-shrink-0 bg-gold rounded-full p-1">
+              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <p class="font-poppins text-white text-lg font-medium">{promo}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-12 text-center border-t border-white/20 pt-8">
+        <a href="https://wa.me/6281234567890?text=Halo,%20saya%20tertarik%20dengan%20Promo%20DP%200%%20dan%20Free%20Biaya-biaya%20di%20PKP2" target="_blank" class="inline-flex items-center justify-center gap-2 bg-gold text-white px-10 py-4 rounded-full font-poppins font-bold text-lg hover:bg-white hover:text-navy transition-all shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:shadow-[0_0_20px_rgba(255,255,255,0.4)]">
+          Ambil Promo Sekarang
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </a>
+        <p class="font-poppins text-sm text-gray-400 mt-4">* Unit sangat terbatas! Jangan sampai kehabisan.</p>
+      </div>
+    </div>
+  </div>
+</section>
