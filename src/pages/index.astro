@@ -5,6 +5,8 @@ import Promo from '../components/Promo.astro';
 import Gallery from '../components/Gallery.astro';
 import Kalkulator from '../components/Kalkulator.astro';
 import Artikel from '../components/Artikel.astro';
+import Footer from '../components/Footer.astro';     // IMPORT BARU
+import StickyWa from '../components/StickyWa.astro'; // IMPORT BARU
 
 const API_URL = "https://script.google.com/macros/s/AKfycby8k957rS6SlUwBtiHmZNLJMawZcwXiPI0yUzxjikjkXGCdaidYCJTroaurA8KcAbpN/exec";
 
@@ -20,6 +22,8 @@ try {
 const heroTitle = data.content.hero_title || "Puri Kencana Permai II";
 const heroSubtitle = data.content.hero_subtitle || "Harga Mulai Rp 900 Jutaan | DP 0%";
 const metaTitle = data.content.meta_title || "Puri Kencana Permai II - Premium";
+const waNumber = data.content.wa_number || "6281234567890";
+const waMessage = data.content.wa_default_msg || "Halo, saya tertarik dengan unit PKP2";
 ---
 
 <html lang="id" class="scroll-smooth">
@@ -41,6 +45,10 @@ const metaTitle = data.content.meta_title || "Puri Kencana Permai II - Premium";
     <Kalkulator />
     <Gallery galleryItems={data.gallery} />
     <Artikel articles={data.articles} />
+    
+    <!-- PASANG DI SINI -->
+    <Footer phone={waNumber} />
+    <StickyWa phoneNumber={waNumber} defaultMessage={waMessage} />
 
   </body>
 </html>
