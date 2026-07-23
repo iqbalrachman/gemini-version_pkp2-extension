@@ -1,0 +1,45 @@
+---
+const { phone } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class="bg-navy pt-20 pb-10 border-t-4 border-gold">
+  <div class="container mx-auto px-6 max-w-6xl">
+    
+    <!-- CTA Besar di Footer -->
+    <div class="bg-gradient-to-br from-gold to-yellow-600 rounded-3xl p-10 md:p-14 text-center -mt-32 mb-16 shadow-2xl relative overflow-hidden">
+      <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20"></div>
+      <h2 class="relative z-10 font-playfair text-3xl md:text-5xl font-bold text-white mb-6">Siap Memiliki Hunian Impian?</h2>
+      <p class="relative z-10 font-poppins text-white/90 text-lg mb-8 max-w-2xl mx-auto">Jangan lewatkan kesempatan mendapatkan promo DP 0% dan bebas biaya-biaya. Unit sangat terbatas!</p>
+      <a href={`https://wa.me/${phone}`} target="_blank" class="relative z-10 inline-block bg-navy text-white px-10 py-4 rounded-full font-poppins font-bold text-lg hover:bg-white hover:text-navy transition-all shadow-lg">
+        Hubungi Marketing Kami
+      </a>
+    </div>
+
+    <!-- Informasi Legalitas & Footer Menu -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 text-gray-400 font-poppins text-sm border-b border-white/10 pb-12">
+      <div>
+        <h3 class="text-white font-playfair text-2xl font-bold mb-4">Puri Kencana Permai II</h3>
+        <p class="mb-4">Hunian premium berdesain modern elegan di lokasi strategis dekat LRT Cibubur. Memberikan kenyamanan hidup maksimal untuk keluarga Anda.</p>
+      </div>
+      <div>
+        <h4 class="text-white font-bold mb-4 uppercase tracking-wider text-xs">Legalitas Aman</h4>
+        <ul class="space-y-2">
+          <li class="flex items-center gap-2"><span class="text-gold">✓</span> Sertifikat Hak Milik (SHM)</li>
+          <li class="flex items-center gap-2"><span class="text-gold">✓</span> IMB Pecah per Unit</li>
+          <li class="flex items-center gap-2"><span class="text-gold">✓</span> Developer Terpercaya</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-bold mb-4 uppercase tracking-wider text-xs">Hubungi Kami</h4>
+        <p class="mb-2">Instagram: <a href="https://instagram.com/arciv.property" target="_blank" class="text-gold hover:underline">@arciv.property</a></p>
+        <p>WhatsApp: +{phone}</p>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="text-center font-poppins text-sm text-gray-500">
+      <p>&copy; {year} Puri Kencana Permai II Extention. Developed by Arciv Property. All rights reserved.</p>
+    </div>
+
+  </div>
+</footer>
