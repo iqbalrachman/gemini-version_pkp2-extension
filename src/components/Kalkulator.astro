@@ -1,0 +1,93 @@
+---
+---
+<section class="py-20 bg-gray-50 border-t border-gray-200">
+  <div class="container mx-auto px-6 max-w-4xl">
+    <div class="text-center mb-12">
+      <h2 class="font-playfair text-4xl font-bold text-navy mb-4">Kalkulator KPR</h2>
+      <p class="font-poppins text-gray-500">Hitung estimasi cicilan bulanan untuk hunian impian Anda.</p>
+    </div>
+
+    <div class="bg-white rounded-[2rem] shadow-xl p-8 md:p-12 border border-gray-100 flex flex-col md:flex-row gap-12">
+      
+      <!-- Input Area -->
+      <div class="flex-1 flex flex-col gap-8">
+        <div>
+          <label class="font-poppins text-sm font-bold text-navy mb-2 block">Harga Properti (Rp)</label>
+          <input type="number" id="calc-harga" value="900000000" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 font-poppins text-navy font-semibold focus:outline-none focus:border-gold transition-colors" />
+        </div>
+
+        <div>
+          <div class="flex justify-between mb-2">
+            <label class="font-poppins text-sm font-bold text-navy">Uang Muka / DP</label>
+            <span class="font-poppins text-sm font-bold text-gold" id="dp-value">10%</span>
+          </div>
+          <input type="range" id="calc-dp" min="0" max="50" step="5" value="10" class="w-full accent-gold h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" />
+        </div>
+
+        <div>
+          <div class="flex justify-between mb-2">
+            <label class="font-poppins text-sm font-bold text-navy">Tenor (Tahun)</label>
+            <span class="font-poppins text-sm font-bold text-gold" id="tenor-value">15 Tahun</span>
+          </div>
+          <input type="range" id="calc-tenor" min="5" max="25" step="5" value="15" class="w-full accent-gold h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" />
+        </div>
+      </div>
+
+      <!-- Result Area -->
+      <div class="flex-1 bg-navy rounded-2xl p-8 text-center flex flex-col justify-center items-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        
+        <p class="font-poppins text-gray-300 text-sm mb-2 relative z-10">Estimasi Cicilan per Bulan</p>
+        <h3 class="font-poppins text-4xl md:text-5xl font-bold text-gold mb-6 relative z-10" id="hasil-cicilan">Rp 0</h3>
+        
+        <p class="font-poppins text-xs text-gray-400 mb-8 relative z-10">*Asumsi bunga fix rate 5% per tahun</p>
+        
+        <a href="https://wa.me/6281234567890?text=Halo,%20saya%20mau%20konsultasi%20KPR%20untuk%20PKP2" target="_blank" class="w-full bg-gold text-white py-3.5 rounded-full font-poppins font-bold hover:bg-white hover:text-navy transition-all relative z-10">
+          Konsultasi KPR Gratis
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const elHarga = document.getElementById('calc-harga');
+    const elDp = document.getElementById('calc-dp');
+    const elTenor = document.getElementById('calc-tenor');
+    const valDp = document.getElementById('dp-value');
+    const valTenor = document.getElementById('tenor-value');
+    const elHasil = document.getElementById('hasil-cicilan');
+
+    const hitungKPR = () => {
+      const harga = parseFloat(elHarga.value) || 0;
+      const dpPersen = parseFloat(elDp.value);
+      const tenorTahun = parseFloat(elTenor.value);
+      
+      valDp.textContent = dpPersen + '%';
+      valTenor.textContent = tenorTahun + ' Tahun';
+
+      const dpNominal = harga * (dpPersen / 100);
+      const pokokHutang = harga - dpNominal;
+      
+      // Rumus sederhana (bunga 5% p.a fix)
+      const bungaTahunan = 0.05;
+      const bungaBulanan = bungaTahunan / 12;
+      const totalBulan = tenorTahun * 12;
+
+      let cicilan = 0;
+      if (pokokHutang > 0 && totalBulan > 0) {
+        cicilan = pokokHutang * (bungaBulanan * Math.pow(1 + bungaBulanan, totalBulan)) / (Math.pow(1 + bungaBulanan, totalBulan) - 1);
+      }
+
+      elHasil.textContent = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(cicilan);
+    };
+
+    elHarga.addEventListener('input', hitungKPR);
+    elDp.addEventListener('input', hitungKPR);
+    elTenor.addEventListener('input', hitungKPR);
+
+    hitungKPR(); // init
+  });
+</script>
