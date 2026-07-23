@@ -1,0 +1,76 @@
+---
+import UnitCard from './UnitCard.astro';
+const { units = [] } = Astro.props;
+
+// Otomatis bikin daftar status unik dari data Spreadsheet lo untuk tombol filter
+const statuses = ['semua', ...new Set(units.map(u => u.status.toString().toLowerCase()))];
+---
+
+<section id="katalog" class="py-24 bg-gray-50">
+  <div class="container mx-auto px-6 max-w-6xl">
+    
+    <!-- Section Title -->
+    <div class="text-center mb-12">
+      <h2 class="font-playfair text-4xl md:text-5xl font-bold text-navy mb-4">Pilihan Unit Premium</h2>
+      <p class="font-poppins text-gray-500 max-w-2xl mx-auto text-lg">Temukan hunian ideal yang dirancang khusus untuk kenyamanan gaya hidup modern keluarga Anda.</p>
+    </div>
+
+    <!-- Filter Chips -->
+    <div class="flex flex-wrap justify-center gap-3 mb-12" id="filter-container">
+      {statuses.map((status) => (
+        <button 
+          class="filter-btn px-6 py-2.5 rounded-full font-poppins text-sm font-semibold transition-all capitalize bg-white border border-gray-200 text-gray-500 hover:border-navy hover:text-navy data-[active=true]:bg-navy data-[active=true]:text-white data-[active=true]:border-navy data-[active=true]:shadow-md" 
+          data-target={status} 
+          data-active={status === 'semua' ? 'true' : 'false'}
+        >
+          {status}
+        </button>
+      ))}
+    </div>
+
+    <!-- Grid Katalog -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="katalog-grid">
+      {units.map((unit) => (
+        <UnitCard
+          tipe={unit.tipe}
+          luasTanah={unit.luas_tanah}
+          luasBangunan={unit.luas_bangunan}
+          kamar={unit.kamar}
+          harga={unit.harga}
+          status={unit.status}
+        />
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<!-- Script Filter (Berjalan instan di browser pengunjung) -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const unitCards = document.querySelectorAll('.unit-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Reset warna semua tombol
+        filterBtns.forEach(b => b.setAttribute('data-active', 'false'));
+        // Aktifkan tombol yang diklik
+        btn.setAttribute('data-active', 'true');
+
+        const target = btn.getAttribute('data-target');
+
+        // Sembunyikan atau tampilkan card sesuai status
+        unitCards.forEach(card => {
+          if (target === 'semua' || card.getAttribute('data-status') === target) {
+            card.style.display = 'block';
+            // Efek transisi halus
+            card.animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 300, fill: 'forwards' });
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>
