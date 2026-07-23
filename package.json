@@ -1,11 +1,13 @@
 {
-  "name": "pkp2-speed-test",
+  "name": "pkp2-landing-page",
   "type": "module",
   "version": "1.0.0",
   "scripts": {
     "build": "astro build"
   },
   "dependencies": {
-    "astro": "^4.0.0"
+    "@astrojs/tailwind": "^5.1.0",
+    "astro": "^4.0.0",
+    "tailwindcss": "^3.4.0"
   }
 }
