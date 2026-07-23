@@ -1,11 +1,12 @@
 ---
 import Hero from '../components/Hero.astro';
-import Katalog from '../components/Katalog.astro'; // Tambahin baris ini
+import Katalog from '../components/Katalog.astro';
+import Promo from '../components/Promo.astro';     // Import baru
+import Gallery from '../components/Gallery.astro'; // Import baru
 
 // Pastikan ini adalah URL Web App lo yang paling baru
 const API_URL = "https://script.google.com/macros/s/AKfycbytVSPIHnoX7I1LoZQ04q1q3EU60P8r2BYlGHKg-55Fu0G0bx7_GTiycmiAiJTNMRIX/exec";
 
-// Bikin tempat penyimpanan data sementara
 let data = { content: {}, units: [], gallery: [], articles: [] };
 
 try {
@@ -15,7 +16,6 @@ try {
   console.error("Error API:", error);
 }
 
-// Persiapan Variabel Hero
 const heroTitle = data.content.hero_title || "Puri Kencana Permai II";
 const heroSubtitle = data.content.hero_subtitle || "Harga Mulai Rp 900 Jutaan | DP 0%";
 const metaTitle = data.content.meta_title || "Puri Kencana Permai II - Premium";
@@ -33,10 +33,17 @@ const metaTitle = data.content.meta_title || "Puri Kencana Permai II - Premium";
   
   <body class="bg-white font-poppins text-navy antialiased">
     
+    <!-- 1. Hero Section -->
     <Hero title={heroTitle} subtitle={heroSubtitle} />
 
-    <!-- Panggil Komponen Katalog & Kirim Data Units-nya -->
+    <!-- 2. Katalog Unit -->
     <Katalog units={data.units} />
+
+    <!-- 3. Section Promo (Konversi Tinggi) -->
+    <Promo />
+
+    <!-- 4. Galeri Visual -->
+    <Gallery galleryItems={data.gallery} />
 
   </body>
 </html>
