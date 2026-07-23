@@ -1,23 +1,52 @@
 ---
-// Bagian ini dieksekusi di server/GitHub saat build, BUKAN di browser pengunjung
-const title = "Puri Kencana Permai II - Speed Test";
+// INI ADALAH "DAPUR" ASTRO.
+// Semua kode di dalam tanda "---" ini HANYA dieksekusi oleh mesin GitHub saat build.
+// Pengunjung web (dan Meta Pixel) sama sekali nggak akan nunggu proses ini!
+
+const API_URL = "https://script.google.com/macros/s/AKfycbytVSPIHnoX7I1LoZQ04q1q3EU60P8r2BYlGHKg-55Fu0G0bx7_GTiycmiAiJTNMRIX/exec";
+
+let heroTitle = "Gagal narik data...";
+let metaTitle = "PKP2 - Speed Test";
+
+try {
+  // Narik data dari GAS
+  const response = await fetch(API_URL);
+  const data = await response.json();
+  
+  // Ngambil spesifik data dari Sheet "Content"
+  heroTitle = data.content.hero_title;
+  metaTitle = data.content.meta_title;
+} catch (error) {
+  console.error("Error fetching data:", error);
+}
 ---
+
 <html lang="id">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
+    <title>{metaTitle}</title>
     <style>
-      body { font-family: sans-serif; background: #fff; color: #1a202c; text-align: center; padding: 20vh 20px; }
-      h1 { color: #0f172a; font-size: 3rem; margin-bottom: 10px; }
-      p { color: #d4af37; font-size: 1.5rem; font-weight: bold; }
+      body { font-family: sans-serif; background: #f8fafc; color: #1a202c; text-align: center; padding: 10vh 20px; }
+      .card { background: white; max-width: 500px; margin: 0 auto; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+      h1 { color: #0f172a; font-size: 1.5rem; margin-bottom: 20px; }
+      .data-badge { display: inline-block; background: #1e3a8a; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: bold; margin-bottom: 10px; }
+      h2 { color: #d4af37; font-size: 2rem; margin: 0; }
     </style>
   </head>
   <body>
-    <h1>{title}</h1>
-    <p>Loading Speed: Secepat Kilat ⚡</p>
-    <p style="color: #666; font-size: 1rem; margin-top: 20px;">
-      Jika halaman ini muncul tanpa delay putih (blank screen) lebih dari 1 detik, berarti infrastruktur kita SUKSES.
-    </p>
+    
+    <div class="card">
+      <div class="data-badge">Fase 2: Backend Connected 🟢</div>
+      <h1>Data ditarik dari Sheet "Content":</h1>
+      
+      <!-- Ini akan nampilin "Puri Kencana Permai II Extention" dari spreadsheet lo -->
+      <h2>{heroTitle}</h2>
+      
+      <p style="color: #64748b; font-size: 0.9rem; margin-top: 20px;">
+        Coba cek loadingnya. Walaupun dia narik data API, kecepatan web lo dijamin tetep ngebut! ⚡
+      </p>
+    </div>
+
   </body>
 </html>
