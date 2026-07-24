@@ -5,8 +5,9 @@ import Promo from '../components/Promo.astro';
 import Gallery from '../components/Gallery.astro';
 import Kalkulator from '../components/Kalkulator.astro';
 import Artikel from '../components/Artikel.astro';
-import Footer from '../components/Footer.astro';     // IMPORT BARU
-import StickyWa from '../components/StickyWa.astro'; // IMPORT BARU
+import Footer from '../components/Footer.astro';
+import StickyWa from '../components/StickyWa.astro';
+import { processDriveImage } from '../utils/driveImage.js';
 
 const API_URL = "https://script.google.com/macros/s/AKfycby8k957rS6SlUwBtiHmZNLJMawZcwXiPI0yUzxjikjkXGCdaidYCJTroaurA8KcAbpN/exec";
 
@@ -19,11 +20,23 @@ try {
   console.error("Error API:", error);
 }
 
+// Cari gambar yang kategorinya 'hero' dari data Gallery lo
+const heroImageItem = data.gallery.find(item => item.kategori === 'hero');
+const heroImageId = heroImageItem ? heroImageItem.drive_link : null;
+
+// Proses download dan kompresi gambar Hero
+let heroBgUrl = '/images/placeholder.webp'; 
+if (heroImageId) {
+  heroBgUrl = await processDriveImage(heroImageId, 'hero', 0);
+  // Pastikan URL disesuaikan dengan folder repo lo di GitHub Pages
+  heroBgUrl = import.meta.env.BASE_URL + heroBgUrl; 
+}
+
 const heroTitle = data.content.hero_title || "Puri Kencana Permai II";
 const heroSubtitle = data.content.hero_subtitle || "Harga Mulai Rp 900 Jutaan | DP 0%";
 const metaTitle = data.content.meta_title || "Puri Kencana Permai II - Premium";
 const waNumber = data.content.wa_number || "6281234567890";
-const waMessage = data.content.wa_default_msg || "Halo, saya tertarik dengan unit PKP2";
+const waMessage = data.content.wa_default_msg || "Halo...";
 ---
 
 <html lang="id" class="scroll-smooth">
@@ -36,19 +49,15 @@ const waMessage = data.content.wa_default_msg || "Halo, saya tertarik dengan uni
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
-  
   <body class="bg-white font-poppins text-navy antialiased selection:bg-gold selection:text-white">
-    
-    <Hero title={heroTitle} subtitle={heroSubtitle} />
+    <!-- Lempar URL gambar yang udah diproses ke komponen Hero -->
+    <Hero title={heroTitle} subtitle={heroSubtitle} heroBgUrl={heroBgUrl} />
     <Katalog units={data.units} />
     <Promo />
     <Kalkulator />
     <Gallery galleryItems={data.gallery} />
     <Artikel articles={data.articles} />
-    
-    <!-- PASANG DI SINI -->
     <Footer phone={waNumber} />
     <StickyWa phoneNumber={waNumber} defaultMessage={waMessage} />
-
   </body>
 </html>
